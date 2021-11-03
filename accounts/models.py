@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager as BaseUserManager
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -28,18 +29,25 @@ class UserManager(BaseUserManager):
             raise ValueError
         return self._create_user(email, password, **extra_fields)
 
+
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField()
-    username = models.CharField(max_length=128)
-    is_staff = models.BooleanField()
-    is_active = models.BooleanField(default=True)
-    date_joined = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField(_('email address'), unique=True)
+    username = models.CharField(_('username'), max_length=128, blank=True)
+    is_staff = models.BooleanField(_('staff status'),
+                                   help_text=_('Designates whether the user can log into this admin site'))
+    is_active = models.BooleanField(_('active'), default=True,
+                                    help_text=_(
+                                        'Designates whether this user should be treated as active. '
+                                        'Unselect this instead of deleting accounts.'
+                                    ))
+    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
     def __str__(self):
         return self.email
 
