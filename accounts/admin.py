@@ -1,9 +1,10 @@
 from datetime import datetime
+
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import Permission
+
 from ecommerce.utils import AdminMessageMixin, get_past_dates
 
 User = get_user_model()
@@ -95,18 +96,22 @@ class UserAdmin(BaseUserAdmin, AdminMessageMixin):
     list_filter = 'is_active', 'is_staff', 'is_superuser', LastLoginTimeSince, 'date_joined', 'groups'
     ordering = None
     search_fields = 'email', 'username'
-    # autocomplete_fields = 'user_permissions', 'groups'
+
     readonly_fields = 'date_joined',
     filter_horizontal = 'user_permissions', 'groups'
+
     fieldsets = [
         (None, {'fields': ('email', 'password')}),
         (_('Personal Info'), {'fields': ('username',)}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'user_permissions', 'groups')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')})
     ]
-
+    add_fieldsets = [
+        (None, {
+            'fields': ('email', 'password1', 'password2')
+        })
+    ]
 
 # @admin.register(Permission)
 # class PermissionModelAdmin(admin.ModelAdmin):
 #     search_fields = 'name',
-

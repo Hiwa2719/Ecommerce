@@ -19,7 +19,10 @@ class UserManager(BaseUserManager):
 
     def create_user(self, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
+        print('is_staff')
+        print(extra_fields.get('is_staff'))
         extra_fields.setdefault('is_superuser', False)
+        print(extra_fields.get('is_superuser'))
         return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email=None, password=None, **extra_fields):
@@ -33,7 +36,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(_('username'), max_length=128, blank=True)
-    is_staff = models.BooleanField(_('staff status'),
+    is_staff = models.BooleanField(_('staff status'), default=False,
                                    help_text=_('Designates whether the user can log into this admin site'))
     is_active = models.BooleanField(_('active'), default=True,
                                     help_text=_(
