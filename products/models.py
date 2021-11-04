@@ -33,4 +33,12 @@ class Product(ProductAbstractBaseModel):
     last_update = models.DateTimeField(auto_now=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
+    descriptions = models.ManyToManyField('Description')
 
+
+class Description(models.Model):
+    title = models.CharField(max_length=128, help_text='short description')
+    content = models.TextField()
+
+    def __str__(self):
+        return self.title
