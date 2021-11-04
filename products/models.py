@@ -46,3 +46,8 @@ class Description(models.Model):
     @property
     def summery(self):
         return self.content[:70]
+
+
+class Tag(ProductAbstractBaseModel):
+    pass
+

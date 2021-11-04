@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from ecommerce.utils import activate, deactivate
-from .models import Product, Description
+from .models import Product, Description, Tag
 
 
 @admin.register(Product)
@@ -28,3 +28,16 @@ class ProductModelAdmin(admin.ModelAdmin):
 class DescriptionModelAdmin(admin.ModelAdmin):
     list_display = 'title', 'summery'
     search_fields = 'title', 'content'
+
+
+@admin.register(Tag)
+class TagModelAdmin(admin.ModelAdmin):
+    list_display = 'name', 'slug'
+    search_fields = 'name', 'slug'
+    readonly_fields = 'slug',
+
+    add_fieldsets = [
+        (None, {
+            'fields': ('name',)
+        })
+    ]
