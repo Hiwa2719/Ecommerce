@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -47,5 +48,7 @@
 {% block content %}
 
 {% endblock %}
+
+<scritp src="{% static 'js/bootstrap.js' %}"></scritp>
 </body>
 </html>
