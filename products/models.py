@@ -33,12 +33,16 @@ class Product(ProductAbstractBaseModel):
     last_update = models.DateTimeField(auto_now=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
-    descriptions = models.ManyToManyField('Description')
+    descriptions = models.ManyToManyField('Description', blank=True)
 
 
 class Description(models.Model):
-    title = models.CharField(max_length=128, help_text='short description')
-    content = models.TextField()
+    title = models.CharField(_('title'), max_length=128, help_text='short description')
+    content = models.TextField(_('content'))
 
     def __str__(self):
         return self.title
+
+    @property
+    def summery(self):
+        return self.content[:70]

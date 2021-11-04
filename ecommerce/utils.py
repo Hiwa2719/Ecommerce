@@ -2,6 +2,7 @@ import random
 import string
 from datetime import datetime
 
+from django.contrib import admin
 from django.contrib import messages
 from django.utils.text import slugify
 from django.utils.translation import ngettext
@@ -57,3 +58,15 @@ def unique_slug_generator(instance, new_slug=None, number_of_chars=4):
         new_slug = f'{slug}-{unique_string_generator()}'
         return unique_slug_generator(instance, new_slug=new_slug, number_of_chars=number_of_chars)
     return slug
+
+
+@admin.action(permissions=['change', ], description='make selected items active')
+def activate(model_admin, request, queryset):
+    updated = queryset.update(is_active=True)
+    model_admin.message_mixin(request, updated, 'user', 'active')
+
+
+@admin.action(permissions=['change', ], description='make selected items de-active')
+def deactivate(model_admin, request, queryset):
+    updated = queryset.update(is_active=False)
+    model_admin.message_mixin(request, updated, 'user', 'de-active')

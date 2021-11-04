@@ -5,21 +5,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from ecommerce.utils import AdminMessageMixin, get_past_dates
+from ecommerce.utils import AdminMessageMixin, get_past_dates, activate, deactivate
 
 User = get_user_model()
-
-
-@admin.action(permissions=['change', ], description='make selected items active')
-def activate(model_admin, request, queryset):
-    updated = queryset.update(is_active=True)
-    model_admin.message_mixin(request, updated, 'user', 'active')
-
-
-@admin.action(permissions=['change', ], description='make selected items de-active')
-def deactivate(model_admin, request, queryset):
-    updated = queryset.update(is_active=False)
-    model_admin.message_mixin(request, updated, 'user', 'de-active')
 
 
 class LastLoginTimeSince(admin.SimpleListFilter):
