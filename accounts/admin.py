@@ -5,7 +5,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from ecommerce.utils import AdminMessageMixin, get_past_dates, activate, deactivate
+from ecommerce.mixins import AdminMessageMixin
+from ecommerce.utils import get_past_dates, activate, deactivate
 
 User = get_user_model()
 

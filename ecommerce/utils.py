@@ -3,21 +3,7 @@ import string
 from datetime import datetime
 
 from django.contrib import admin
-from django.contrib import messages
 from django.utils.text import slugify
-from django.utils.translation import ngettext
-
-
-class AdminMessageMixin:
-    """a custom mixin for showing messages of custom actions inside admin panel"""
-
-    def message_mixin(self, request, updated, items, status):
-        message = ngettext(
-            '{} {} got {} successfully.',
-            '{} {}s got {} successfully.',
-            updated
-        ).format(updated, items, status)
-        return self.message_user(request, message, messages.SUCCESS)
 
 
 def get_past_dates(now=None, years=0, months=0, days=0):
