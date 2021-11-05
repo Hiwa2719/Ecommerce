@@ -15,7 +15,8 @@ class ProductAbstractBaseModel(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = unique_slug_generator(self)
+        if not self.slug:
+            self.slug = unique_slug_generator(self)
         super().save(*args, **kwargs)
 
     class Meta:
@@ -34,6 +35,7 @@ class Product(ProductAbstractBaseModel):
     created_date = models.DateTimeField(auto_now_add=True)
 
     descriptions = models.ManyToManyField('Description', blank=True)
+    tags = models.ManyToManyField('Tag', blank=True)
 
 
 class Description(models.Model):
@@ -51,3 +53,13 @@ class Description(models.Model):
 class Tag(ProductAbstractBaseModel):
     pass
 
+
+class Category(ProductAbstractBaseModel):
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True,
+                               help_text='shows the parent category of this one')
+
+    def has_parent(self):
+        return self.parent
+
+    class Meta:
+        verbose_name_plural = 'Categories'

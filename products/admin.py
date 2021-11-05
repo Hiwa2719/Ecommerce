@@ -1,8 +1,10 @@
+import re
+
 from django.contrib import admin
 
-from ecommerce.mixins import AddFieldSetsMixin
+from ecommerce.mixins import AddFieldSetsMixin, AdminMessageMixin
 from ecommerce.utils import activate, deactivate
-from .models import Product, Description, Tag
+from .models import Product, Description, Tag, Category
 
 
 @admin.register(Product)
@@ -37,3 +39,34 @@ class TagModelAdmin(AddFieldSetsMixin, admin.ModelAdmin):
             'fields': ('name',)
         })
     ]
+
+
+@admin.action(permissions=['change'], description='clear parent of select items')
+def clear_parent(model_admin, request, queryset):
+    updated = queryset.update(parent=None)
+    model_admin.message_mixin(request, updated, 'category', 'unparent')
+
+
+@admin.register(Category)
+class CategoryModelAdmin(AdminMessageMixin, AddFieldSetsMixin, admin.ModelAdmin):
+    actions = clear_parent,
+    list_display = 'name', 'slug', 'parent'
+    readonly_fields = 'slug',
+    search_fields = 'name', 'slug',
+
+    autocomplete_fields = 'parent',
+    add_fieldsets = [
+        (None, {
+            'fields': ('name', 'parent')
+        })
+    ]
+
+    def get_search_results(self, request, queryset, search_term):
+        result = super().get_search_results(request, queryset, search_term)
+        match = re.search('category/[0-9]+/change/', request.META.get('HTTP_REFERER'))
+        if match and request.path_info == '/admin/autocomplete/':
+            pk_match = re.search(r'[0-9]+', match.group())
+            if pk_match:
+                queryset = result[0].exclude(pk=int(pk_match.group()))
+                return queryset, result[1]
+        return result
