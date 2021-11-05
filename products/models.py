@@ -36,6 +36,7 @@ class Product(ProductAbstractBaseModel):
 
     descriptions = models.ManyToManyField('Description', blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
+    categories = models.ManyToManyField('Category', blank=True)
 
 
 class Description(models.Model):
@@ -57,9 +58,6 @@ class Tag(ProductAbstractBaseModel):
 class Category(ProductAbstractBaseModel):
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True,
                                help_text='shows the parent category of this one')
-
-    def has_parent(self):
-        return self.parent
 
     class Meta:
         verbose_name_plural = 'Categories'
