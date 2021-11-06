@@ -1,9 +1,5 @@
 from django.db import models
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
-
-from ecommerce.utils import unique_slug_generator
 
 
 class ProductAbstractBaseModel(models.Model):
@@ -58,14 +54,3 @@ class Category(ProductAbstractBaseModel):
 
     class Meta:
         verbose_name_plural = 'Categories'
-
-
-@receiver(pre_save, sender=Tag)
-@receiver(pre_save, sender=Category)
-@receiver(pre_save, sender=Product)
-def product_abstract_model_pre_save(sender, instance, *args, **kwargs):
-    if instance.pk:
-        if sender.objects.get(pk=instance.pk).name != instance.name:
-            instance.slug = unique_slug_generator(instance)
-    if not instance.slug:
-        instance.slug = unique_slug_generator(instance)
