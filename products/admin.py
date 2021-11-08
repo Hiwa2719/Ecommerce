@@ -4,6 +4,7 @@ from django.contrib import admin
 
 from ecommerce.mixins import AddFieldSetsMixin, AdminMessageMixin
 from ecommerce.utils import activate, deactivate
+from .forms import CategoryForm
 from .models import Product, Description, Tag, Category
 
 
@@ -60,6 +61,7 @@ class CategoryModelAdmin(AdminMessageMixin, AddFieldSetsMixin, admin.ModelAdmin)
             'fields': ('name', 'parent')
         })
     ]
+    form = CategoryForm
 
     def get_search_results(self, request, queryset, search_term):
         result = super().get_search_results(request, queryset, search_term)
