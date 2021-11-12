@@ -5,8 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 from ecommerce.mixins import AddFieldSetsMixin, AdminMessageMixin
 from ecommerce.utils import activate, deactivate
-from .forms import CategoryForm
-from .models import Product, Description, Tag, Category, Image, Brand
+from .forms import CategoryForm, FeatureForm
+from .models import Product, Description, Tag, Category, Image, Brand, Feature
 
 
 @admin.register(Product)
@@ -106,3 +106,12 @@ class BrandModelAdmin(admin.ModelAdmin):
         if not obj:
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
+
+
+@admin.register(Feature)
+class FeatureModelAdmin(admin.ModelAdmin):
+    list_display = 'name', 'value'
+    list_filter = 'name',
+    search_fields = 'name', 'value'
+
+    form = FeatureForm

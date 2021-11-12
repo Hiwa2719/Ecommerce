@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.constraints import UniqueConstraint
 from django.utils.translation import gettext_lazy as _
 
 
@@ -31,6 +32,7 @@ class Product(ProductAbstractBaseModel):
     tags = models.ManyToManyField('Tag', blank=True)
     categories = models.ManyToManyField('Category', blank=True)
     images = models.ManyToManyField('Image', blank=True)
+    features = models.ManyToManyField('Feature', blank=True)
 
 
 class Description(models.Model):
@@ -80,4 +82,7 @@ class Feature(models.Model):
     value = models.TextField(_('Value'))
 
     def __str__(self):
-        return self.name
+        return self.name + ' --> ' + self.value
+
+    class Meta:
+        constraints = [UniqueConstraint(fields=['name', 'value'], name='name-value uniqueness')]
