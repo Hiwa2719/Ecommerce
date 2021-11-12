@@ -73,3 +73,11 @@ class Image(models.Model):
 
     def __str__(self):
         return self.image.name
+
+
+class Feature(models.Model):
+    name = models.CharField(_('name'), max_length=128)
+    value = models.TextField(_('Value'))
+
+    def __str__(self):
+        return self.name
