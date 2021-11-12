@@ -1,11 +1,12 @@
 import re
 
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from ecommerce.mixins import AddFieldSetsMixin, AdminMessageMixin
 from ecommerce.utils import activate, deactivate
 from .forms import CategoryForm
-from .models import Product, Description, Tag, Category, Image
+from .models import Product, Description, Tag, Category, Image, Brand
 
 
 @admin.register(Product)
@@ -77,3 +78,31 @@ class CategoryModelAdmin(AdminMessageMixin, AddFieldSetsMixin, admin.ModelAdmin)
 @admin.register(Image)
 class ImageModelAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Brand)
+class BrandModelAdmin(admin.ModelAdmin):
+    list_display = '__str__', 'slug'
+    search_fields = 'name', 'slug', 'descriptions__title', 'descriptions__content', 'categories__name'
+    filter_horizontal = 'categories', 'descriptions', 'images'
+    readonly_fields = 'slug',
+
+    add_fieldsets = [
+        (None, {
+            'fields': ('name', 'categories', 'descriptions', 'images')
+        })
+    ]
+
+    fieldsets = [
+        (_('Brand Info'), {
+            'fields': ('name', 'slug')
+        }),
+        (_('Relations'), {
+            'fields': ('categories', 'descriptions', 'images')
+        })
+    ]
+
+    def get_fieldsets(self, request, obj=None):
+        if not obj:
+            return self.add_fieldsets
+        return super().get_fieldsets(request, obj)
