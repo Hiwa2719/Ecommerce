@@ -57,6 +57,12 @@ class Category(ProductAbstractBaseModel):
         verbose_name_plural = 'Categories'
 
 
+class Brand(ProductAbstractBaseModel):
+    descriptions = models.ManyToManyField('Description', blank=True)
+    images = models.ManyToManyField('Image', blank=True)
+    categories = models.ManyToManyField('Category', blank=True)
+
+
 def image_upload_location():
     pass
 
