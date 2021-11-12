@@ -81,7 +81,7 @@ class ImageModelAdmin(admin.ModelAdmin):
 
 
 @admin.register(Brand)
-class BrandModelAdmin(admin.ModelAdmin):
+class BrandModelAdmin(AddFieldSetsMixin, admin.ModelAdmin):
     list_display = '__str__', 'slug'
     search_fields = 'name', 'slug', 'descriptions__title', 'descriptions__content', 'categories__name'
     filter_horizontal = 'categories', 'descriptions', 'images'
@@ -101,11 +101,6 @@ class BrandModelAdmin(admin.ModelAdmin):
             'fields': ('categories', 'descriptions', 'images')
         })
     ]
-
-    def get_fieldsets(self, request, obj=None):
-        if not obj:
-            return self.add_fieldsets
-        return super().get_fieldsets(request, obj)
 
 
 @admin.register(Feature)

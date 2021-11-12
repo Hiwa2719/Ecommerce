@@ -48,7 +48,8 @@ class Description(models.Model):
 
 
 class Tag(ProductAbstractBaseModel):
-    pass
+    class Meta:
+        constraints = UniqueConstraint(fields=('name',), name='unique name'),
 
 
 class Category(ProductAbstractBaseModel):

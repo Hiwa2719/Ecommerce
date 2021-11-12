@@ -10,6 +10,7 @@ from products.models import Product, Category, Tag, Brand
 @receiver(pre_save, sender=Category)
 @receiver(pre_save, sender=Product)
 def product_abstract_model_pre_save(sender, instance, **kwargs):
+    instance.name = instance.name.lower()
     if instance.pk:
         if sender.objects.get(pk=instance.pk).name != instance.name:
             instance.slug = unique_slug_generator(instance)
