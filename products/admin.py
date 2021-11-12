@@ -5,7 +5,7 @@ from django.contrib import admin
 from ecommerce.mixins import AddFieldSetsMixin, AdminMessageMixin
 from ecommerce.utils import activate, deactivate
 from .forms import CategoryForm
-from .models import Product, Description, Tag, Category
+from .models import Product, Description, Tag, Category, Image
 
 
 @admin.register(Product)
@@ -14,7 +14,7 @@ class ProductModelAdmin(AddFieldSetsMixin, admin.ModelAdmin):
     search_fields = 'name', 'slug', 'descriptions__title', 'descriptions__content'
     list_display = '__str__', 'is_active', 'is_digital'
     list_filter = 'is_active', 'is_digital', 'last_update', 'created_date'
-    filter_horizontal = 'descriptions',
+    filter_horizontal = 'descriptions', 'tags', 'categories', 'images'
     readonly_fields = 'slug',
     add_fieldsets = [
         (None, {
@@ -72,3 +72,8 @@ class CategoryModelAdmin(AdminMessageMixin, AddFieldSetsMixin, admin.ModelAdmin)
                 queryset = result[0].exclude(pk=int(pk_match.group()))
                 return queryset, result[1]
         return result
+
+
+@admin.register(Image)
+class ImageModelAdmin(admin.ModelAdmin):
+    pass

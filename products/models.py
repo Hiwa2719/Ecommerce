@@ -30,6 +30,7 @@ class Product(ProductAbstractBaseModel):
     descriptions = models.ManyToManyField('Description', blank=True)
     tags = models.ManyToManyField('Tag', blank=True)
     categories = models.ManyToManyField('Category', blank=True)
+    images = models.ManyToManyField('Image', blank=True)
 
 
 class Description(models.Model):
@@ -54,3 +55,15 @@ class Category(ProductAbstractBaseModel):
 
     class Meta:
         verbose_name_plural = 'Categories'
+
+
+def image_upload_location():
+    pass
+
+
+class Image(models.Model):
+    name = models.CharField(max_length=128, blank=True)
+    image = models.ImageField(upload_to='images')
+
+    def __str__(self):
+        return self.image.name
