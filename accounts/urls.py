@@ -9,7 +9,9 @@ urlpatterns = [
                   path('profile/', accounts_views.ProfileView.as_view(), name='profile'),
                   path('signup/', accounts_views.SignupView.as_view(), name='signup'),
                   path('password_change/',
-                       views.PasswordChangeView.as_view(success_url=reverse_lazy('accounts:password_change_done'))),
+                       views.PasswordChangeView.as_view(success_url=reverse_lazy('accounts:password_change_done')),
+                       name='password_change'),
                   path('password_reset/',
-                       views.PasswordResetView.as_view(success_url=reverse_lazy('accounts:password_reset_done')))
+                       views.PasswordResetView.as_view(success_url=reverse_lazy('accounts:password_reset_done')),
+                       name='password_reset')
               ] + urlpatterns

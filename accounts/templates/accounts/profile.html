@@ -3,8 +3,59 @@
 
 {% block content %}
     <div class="row justify-content-center mt-5">
-        <div class="col-4">
-            <h1>Sorry this page is still not ready!!! please contact the support team</h1>
+        <div class="col-2">
+            <a href="" class="text-decoration-none text-black">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Edit personal Info</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-2">
+            <a href="{% url 'accounts:password_reset' %}" class="text-decoration-none text-black">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">reset password</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-2">
+            <a href="{% url 'accounts:password_change' %}" class="text-decoration-none text-black">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">change password</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-2">
+            <a href="" class="text-decoration-none text-black">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">change email</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-2">
+            <a href="" class="text-decoration-none text-black">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">orders</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-2">
+            <a href="" class="text-decoration-none text-black">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Delete Account</h5>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 {% endblock %}
