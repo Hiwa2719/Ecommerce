@@ -33,6 +33,7 @@ class Product(ProductAbstractBaseModel):
     categories = models.ManyToManyField('Category', blank=True)
     images = models.ManyToManyField('Image', blank=True)
     features = models.ManyToManyField('Feature', blank=True)
+    brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, blank=True, null=True)
 
 
 class Description(models.Model):

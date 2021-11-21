@@ -15,8 +15,16 @@ class ProductModelAdmin(AddFieldSetsMixin, admin.ModelAdmin):
     search_fields = 'name', 'slug', 'descriptions__title', 'descriptions__content'
     list_display = '__str__', 'is_active', 'is_digital'
     list_filter = 'is_active', 'is_digital', 'last_update', 'created_date'
-    filter_horizontal = 'descriptions', 'tags', 'categories', 'images'
+    filter_horizontal = 'descriptions', 'tags', 'categories', 'images', 'features'
     readonly_fields = 'slug',
+    fieldsets = [
+        (_('Product Info'), {
+            'fields': ('name', 'slug', 'is_active', 'is_digital')
+        }),
+        (_('Relations'), {
+            'fields': ('brand', 'categories', 'descriptions', 'features', 'images', 'tags')
+        })
+    ]
     add_fieldsets = [
         (None, {
             'fields': ('name', 'is_active', 'is_digital', 'descriptions')
@@ -55,7 +63,6 @@ class CategoryModelAdmin(AdminMessageMixin, AddFieldSetsMixin, admin.ModelAdmin)
     list_display = 'name', 'slug', 'parent'
     readonly_fields = 'slug',
     search_fields = 'name', 'slug',
-
     autocomplete_fields = 'parent',
     add_fieldsets = [
         (None, {
