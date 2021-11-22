@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="mt-5">
+        <div class="container text-center">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <h4>Are you sure to delete your account!!??</h4>
+                <input type="submit" class="btn btn-danger" value="Yes">
+                <a href="{% url 'accounts:profile' %}">Cancel</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
