@@ -46,6 +46,16 @@ INSTALLED_APPS = [
     'comments',
 ]
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'hiahmadyan@gmail.com'
+EMAIL_HOST_PASSWORD = getattr(keys, 'EMAIL_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'hiahmadyan@gmail.com'
+
+ADMINS = [('hiwa ahmad', 'hiahmadyan@gmail.com')]
+MANAGERS = ADMINS
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
