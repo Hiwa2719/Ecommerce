@@ -2,6 +2,15 @@
 
 
 {% block content %}
+    {% if not request.user.customer.verified_email %}
+        <div class="row justify-content-center mt-5">
+            <div class="col-4">
+                <form action="{% url 'accounts:email_verification' %}">
+                    <h5>please click on <input type="submit" value="Here"> to send the verification link</h5>
+                </form>
+            </div>
+        </div>
+    {% endif %}
     <div class="row justify-content-center mt-5">
         <div class="col-2">
             <a href="" class="text-decoration-none text-black">

@@ -8,7 +8,7 @@ from django.template import loader
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from django.views.generic import CreateView, TemplateView, DeleteView, ListView, View
+from django.views.generic import CreateView, TemplateView, DeleteView, ListView
 
 from .forms import SignupForm
 from .models import Customer
@@ -28,7 +28,9 @@ class SignupView(CreateView):
     success_url = reverse_lazy('accounts:login')
 
 
-class EmailVerification(View):
+class EmailVerification(TemplateView):
+    template_name = 'accounts/email_verification_send.html'
+
     def get(self, request, *args, **kwargs):
         customer = request.user.customer
         if not customer.verified_email:
@@ -49,6 +51,7 @@ class EmailVerification(View):
                 from_email='hiahmadyan@gmail.com',
                 recipient_list=[customer.email, ]
             )
+            return super().get(request, *args, **kwargs)
         raise Http404
 
 

@@ -6,6 +6,7 @@ from . import views as accounts_views
 app_name = 'accounts'
 
 urlpatterns = [
+                  path('email_verification/', accounts_views.EmailVerification.as_view(), name='email_verification'),
                   path('profile/', accounts_views.ProfileView.as_view(), name='profile'),
                   path('signup/', accounts_views.SignupView.as_view(), name='signup'),
                   path('delete-account/', accounts_views.DeleteAccountView.as_view(), name='delete_account'),
