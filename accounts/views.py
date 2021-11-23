@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, DeleteView, ListView
 
 from .forms import SignupForm
+from .models import Customer
 
 User = get_user_model()
 
@@ -16,7 +17,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
 class SignupView(CreateView):
     form_class = SignupForm
-    model = User
+    model = Customer
     success_url = reverse_lazy('accounts:login')
 
 
@@ -24,7 +25,7 @@ class DeleteAccountView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('accounts:delete_success')
 
     def get_object(self, queryset=None):
-        return self.request.user
+        return self.request.user.customer
 
 
 class DeleteSuccessView(TemplateView):

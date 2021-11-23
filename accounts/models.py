@@ -57,3 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def is_admin(self):
         return self.is_superuser
+
+
+class Customer(User):
+    verified_email = models.BooleanField(default=False)

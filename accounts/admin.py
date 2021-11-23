@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
+from accounts.models import Customer
 from ecommerce.mixins import AdminMessageMixin
 from ecommerce.utils import get_past_dates, activate, deactivate
 
@@ -101,6 +102,15 @@ class UserAdmin(BaseUserAdmin, AdminMessageMixin):
         })
     ]
 
-# @admin.register(Permission)
-# class PermissionModelAdmin(admin.ModelAdmin):
-#     search_fields = 'name',
+
+@admin.register(Customer)
+class CustomerModelAdmin(UserAdmin):
+    list_display = 'email', 'username', 'is_active', 'is_staff', 'verified_email'
+    list_filter = 'is_active', 'is_staff', 'is_superuser', 'verified_email', LastLoginTimeSince, 'date_joined', 'groups'
+    fieldsets = [
+        (None, {'fields': ('email', 'password')}),
+        (_('Personal Info'), {'fields': ('username',)}),
+        (_('Permissions'),
+         {'fields': ('is_active', 'is_staff', 'is_superuser', 'verified_email', 'user_permissions', 'groups')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')})
+    ]
