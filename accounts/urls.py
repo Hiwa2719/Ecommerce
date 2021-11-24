@@ -6,6 +6,8 @@ from . import views as accounts_views
 app_name = 'accounts'
 
 urlpatterns = [
+                  path('personl_info_update/<int:pk>/', accounts_views.PersonalInfoUpdateView.as_view(),
+                       name='personal_info_update'),
                   path('email_verification/', accounts_views.EmailVerification.as_view(), name='email_verification'),
                   path('verify_email/<uidb64>/<token>/', accounts_views.EmailVerificationLinkCheckView.as_view(),
                        name='link_verification'),

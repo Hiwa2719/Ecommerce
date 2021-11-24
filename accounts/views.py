@@ -9,7 +9,7 @@ from django.template import loader
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.views.generic import CreateView, TemplateView, DeleteView, ListView, View
+from django.views.generic import CreateView, TemplateView, DeleteView, ListView, View, UpdateView
 
 from ecommerce.utils import EmailVerificationTokenGenerator
 from .forms import SignupForm
@@ -96,3 +96,9 @@ class OrderListView(ListView):
     # todo implement this view with Order model
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+
+
+class PersonalInfoUpdateView(UpdateView):
+    model = Customer
+    fields = 'username',
+    success_url = reverse_lazy('accounts:profile')

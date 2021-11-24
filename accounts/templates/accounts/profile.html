@@ -13,7 +13,7 @@
     {% endif %}
     <div class="row justify-content-center mt-5">
         <div class="col-2">
-            <a href="" class="text-decoration-none text-black">
+            <a href="{% url 'accounts:personal_info_update' pk=request.user.customer.pk %}" class="text-decoration-none text-black">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body text-center">
                         <h5 class="card-title">Edit personal Info</h5>
