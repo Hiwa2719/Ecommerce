@@ -61,4 +61,4 @@ def deactivate(model_admin, request, queryset):
 
 class EmailVerificationTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
-        return f'{user.pk}{timestamp}{user.customer.verified_email}'
+        return f'{user.pk}{timestamp}{user.verified_email}'

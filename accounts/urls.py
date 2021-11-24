@@ -7,9 +7,9 @@ app_name = 'accounts'
 
 urlpatterns = [
                   path('email_verification/', accounts_views.EmailVerification.as_view(), name='email_verification'),
-                  path('verify_email/<uidb64>/<token>/', accounts_views.EmailVerificationLinkView.as_view(),
+                  path('verify_email/<uidb64>/<token>/', accounts_views.EmailVerificationLinkCheckView.as_view(),
                        name='link_verification'),
-                  path('verification-successful/', accounts_views.VerificationSuccess.as_view(),
+                  path('verification-successful/', accounts_views.EmailVerificationSuccess.as_view(),
                        name='verification_success'),
                   path('profile/', accounts_views.ProfileView.as_view(), name='profile'),
                   path('signup/', accounts_views.SignupView.as_view(), name='signup'),

@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
@@ -12,6 +11,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView, TemplateView, DeleteView, ListView, View
 
+from ecommerce.utils import EmailVerificationTokenGenerator
 from .forms import SignupForm
 from .models import Customer
 
@@ -43,7 +43,7 @@ class EmailVerification(TemplateView):
                 'site_name': current_site.name,
                 'uid': urlsafe_base64_encode(force_bytes(customer.id)),
                 'user': customer,
-                'token': default_token_generator.make_token(customer),
+                'token': EmailVerificationTokenGenerator().make_token(customer),
                 'protocol': 'http'
             }
             body = loader.render_to_string('accounts/verification_email_template.html', context)
@@ -57,13 +57,13 @@ class EmailVerification(TemplateView):
         raise Http404
 
 
-class EmailVerificationLinkView(View):
+class EmailVerificationLinkCheckView(View):
     def dispatch(self, *args, **kwargs):
         self.customer = self.get_user(kwargs.get('uidb64'))
         if self.customer is not None:
             token = kwargs.get('token')
             if token:
-                if default_token_generator.check_token(self.customer, token):
+                if EmailVerificationTokenGenerator().check_token(self.customer, token):
                     self.customer.verify()
                     return redirect('accounts:verification_success')
         raise Http404
@@ -77,7 +77,7 @@ class EmailVerificationLinkView(View):
         return customer
 
 
-class VerificationSuccess(TemplateView):
+class EmailVerificationSuccess(TemplateView):
     template_name = 'accounts/verification_successful.html'
 
 
