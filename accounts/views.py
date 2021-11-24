@@ -2,13 +2,15 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 from django.http import Http404
+from django.shortcuts import redirect
 from django.template import loader
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
-from django.views.generic import CreateView, TemplateView, DeleteView, ListView
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views.generic import CreateView, TemplateView, DeleteView, ListView, View
 
 from .forms import SignupForm
 from .models import Customer
@@ -53,6 +55,30 @@ class EmailVerification(TemplateView):
             )
             return super().get(request, *args, **kwargs)
         raise Http404
+
+
+class EmailVerificationLinkView(View):
+    def dispatch(self, *args, **kwargs):
+        self.customer = self.get_user(kwargs.get('uidb64'))
+        if self.customer is not None:
+            token = kwargs.get('token')
+            if token:
+                if default_token_generator.check_token(self.customer, token):
+                    self.customer.verify()
+                    return redirect('accounts:verification_success')
+        raise Http404
+
+    def get_user(self, uidb64):
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode()
+            customer = Customer.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, Customer.DoesNotExist, ValidationError):
+            customer = None
+        return customer
+
+
+class VerificationSuccess(TemplateView):
+    template_name = 'accounts/verification_successful.html'
 
 
 class DeleteAccountView(LoginRequiredMixin, DeleteView):

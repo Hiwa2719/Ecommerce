@@ -5,7 +5,7 @@
 
 {% translate "Please go to the following page" %}
 {% block reset_link %}
-{{ protocol }}://{{ domain }}{% url 'accounts:password_reset_confirm' uidb64=uid token=token %}
+{{ protocol }}://{{ domain }}{% url 'accounts:link_verification' uidb64=uid token=token %}
 {% endblock %}
 {% translate 'Your username, in case you’ve forgotten:' %} {{ user.get_username }}
 

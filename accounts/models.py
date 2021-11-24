@@ -61,3 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Customer(User):
     verified_email = models.BooleanField(default=False)
+
+    def verify(self):
+        self.verified_email = True
+        self.save()
