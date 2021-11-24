@@ -3,6 +3,7 @@ import string
 from datetime import datetime
 
 from django.contrib import admin
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.text import slugify
 
 
@@ -56,3 +57,8 @@ def activate(model_admin, request, queryset):
 def deactivate(model_admin, request, queryset):
     updated = queryset.update(is_active=False)
     model_admin.message_mixin(request, updated, 'user', 'de-active')
+
+
+class EmailVerificationTokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self, user, timestamp):
+        return f'{user.pk}{timestamp}{user.customer.verified_email}'
