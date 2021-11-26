@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.constraints import UniqueConstraint
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
@@ -34,6 +35,9 @@ class Product(ProductAbstractBaseModel):
     images = models.ManyToManyField('Image', blank=True)
     features = models.ManyToManyField('Feature', blank=True)
     brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('products:product_detail', kwargs={'slug': self.slug})
 
 
 class Description(models.Model):

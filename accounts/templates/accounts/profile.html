@@ -2,67 +2,64 @@
 
 
 {% block content %}
+    <div class="row mt-5">
+        <div class="col-1 col-md-3"></div>
+        <div class="col-6 bg-info">
+            <p class="my-auto py-2 rounded">Welcome <strong>{{ request.user.username }}</strong></p>
+        </div>
+    </div>
     {% if not request.user.customer.verified_email %}
-        <div class="row justify-content-center mt-5">
-            <div class="col-4">
-                <form action="{% url 'accounts:email_verification' %}">
-                    <h5>please click on <input type="submit" value="Here"> to send the verification link</h5>
-                </form>
+        <div class="row justify-content-center mt-3">
+            <div class="col-6">
+                <div class="bg-light p-1 rounded">
+                    <form action="{% url 'accounts:email_verification' %}">
+                        <h5 class=" my-auto">please click on <input type="submit" value="Here" class="btn btn-warning">
+                            to send the Email verification link</h5>
+                    </form>
+                </div>
             </div>
         </div>
     {% endif %}
-    <div class="row justify-content-center mt-5">
+    <div class="row justify-content-center mt-5 px-3">
         <div class="col-2">
-            <a href="{% url 'accounts:personal_info_update' pk=request.user.customer.pk %}" class="text-decoration-none text-black">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Edit personal Info</h5>
-                    </div>
+            <a href="{% url 'accounts:personal_info_update' pk=request.user.customer.pk %}" class="">
+                <div class="profile-card">
+                    <h5 class="">Edit personal Info</h5>
                 </div>
             </a>
         </div>
         <div class="col-2">
-            <a href="{% url 'accounts:password_reset' %}" class="text-decoration-none text-black">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">reset password</h5>
-                    </div>
+            <a href="{% url 'accounts:password_reset' %}">
+                <div class="profile-card">
+                    <h5 class="">reset password</h5>
                 </div>
             </a>
         </div>
         <div class="col-2">
-            <a href="{% url 'accounts:password_change' %}" class="text-decoration-none text-black">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">change password</h5>
-                    </div>
+            <a href="{% url 'accounts:password_change' %}" class="">
+                <div class="profile-card">
+                    <h5 class="">change password</h5>
                 </div>
             </a>
         </div>
         <div class="col-2">
-            <a href="" class="text-decoration-none text-black">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">change email</h5>
-                    </div>
+            <a href="" class="">
+                <div class="profile-card">
+                    <h5 class=:">change email</h5>
                 </div>
             </a>
         </div>
         <div class="col-2">
-            <a href="{% url 'accounts:order-list' %}" class="text-decoration-none text-black">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">orders</h5>
-                    </div>
+            <a href="{% url 'accounts:order-list' %}" class="">
+                <div class="profile-card">
+                    <h5 class="">orders</h5>
                 </div>
             </a>
         </div>
         <div class="col-2">
-            <a href="{% url 'accounts:delete_account' %}" class="text-decoration-none text-black">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Delete Account</h5>
-                    </div>
+            <a href="{% url 'accounts:delete_account' %}" class="">
+                <div class="profile-card">
+                    <h5 class="">Delete Account</h5>
                 </div>
             </a>
         </div>

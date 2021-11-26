@@ -1,0 +1,11 @@
+
+
+.profile-card {
+    border: #eee 1px solid;
+    border-radius: 2%;
+    background: #eee;
+    padding: 10px;
+    text-decoration: None;
+    color: black;
+    text-underline: None;
+}
