@@ -5,8 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 from ecommerce.mixins import AddFieldSetsMixin, AdminMessageMixin
 from ecommerce.utils import activate, deactivate
-from .forms import CategoryForm, FeatureForm
-from .models import Product, Description, Tag, Category, Image, Brand, Feature
+from .forms import CategoryForm, ProductForm
+from .models import Product, Description, Tag, Category, Image, Brand
 
 
 @admin.register(Product)
@@ -15,7 +15,7 @@ class ProductModelAdmin(AddFieldSetsMixin, admin.ModelAdmin):
     search_fields = 'name', 'slug', 'descriptions__title', 'descriptions__content'
     list_display = '__str__', 'is_active', 'is_digital'
     list_filter = 'is_active', 'is_digital', 'last_update', 'created_date'
-    filter_horizontal = 'descriptions', 'tags', 'categories', 'images', 'features'
+    filter_horizontal = 'descriptions', 'tags', 'categories', 'images',
     readonly_fields = 'slug',
     fieldsets = [
         (_('Product Info'), {
@@ -27,9 +27,10 @@ class ProductModelAdmin(AddFieldSetsMixin, admin.ModelAdmin):
     ]
     add_fieldsets = [
         (None, {
-            'fields': ('name', 'is_active', 'is_digital', 'descriptions')
+            'fields': ('name', 'is_active', 'is_digital', 'descriptions', 'excel')
         })
     ]
+    form = ProductForm
 
 
 @admin.register(Description)
@@ -110,10 +111,10 @@ class BrandModelAdmin(AddFieldSetsMixin, admin.ModelAdmin):
     ]
 
 
-@admin.register(Feature)
-class FeatureModelAdmin(admin.ModelAdmin):
-    list_display = 'name', 'value'
-    list_filter = 'name',
-    search_fields = 'name', 'value'
-
-    form = FeatureForm
+# @admin.register(Feature)
+# class FeatureModelAdmin(admin.ModelAdmin):
+#     list_display = '__str__',
+#     list_filter = 'parent_feature',
+#     search_fields = 'parent_feature', 'value'
+#
+#     form = FeatureForm

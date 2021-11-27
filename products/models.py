@@ -33,7 +33,8 @@ class Product(ProductAbstractBaseModel):
     tags = models.ManyToManyField('Tag', blank=True)
     categories = models.ManyToManyField('Category', blank=True)
     images = models.ManyToManyField('Image', blank=True)
-    features = models.ManyToManyField('Feature', blank=True)
+    # features = models.ManyToManyField('Feature', blank=True)
+    features = models.JSONField()
     brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, blank=True, null=True)
 
     def get_absolute_url(self):
@@ -83,12 +84,16 @@ class Image(models.Model):
         return self.image.name
 
 
-class Feature(models.Model):
-    name = models.CharField(_('name'), max_length=128)
-    value = models.TextField(_('Value'))
-
-    def __str__(self):
-        return self.name + ' --> ' + self.value
-
-    class Meta:
-        constraints = [UniqueConstraint(fields=['name', 'value'], name='name-value uniqueness')]
+# class Feature(models.Model):
+#     # name = models.CharField(_('name'), max_length=128)
+#     value = models.TextField(_('Value'))
+#     parent_feature = models.ForeignKey('self', on_delete=models.CASCADE,
+#                                        help_text='for products with multiple sub features', blank=True, null=True)
+#
+#     def __str__(self):
+#         if self.parent_feature:
+#             return str(self.parent_feature) + '-->' + self.value
+#         return self.value
+#
+#     class Meta:
+#         constraints = [UniqueConstraint(fields=['parent_feature', 'value'], name='parent-value uniqueness')]

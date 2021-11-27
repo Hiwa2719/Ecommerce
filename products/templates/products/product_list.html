@@ -2,15 +2,15 @@
 
 
 {% block content %}
-    <div class="container">
+    <div class="container mt-5">
         {% for product in product_list %}
             <div class="card" style="width: 18rem;">
-                <img src="" class="card-img-top" alt="...">
+                <img src="{{ product.images.first.image.url }}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name}}</h5>
                     <p class="card-text">{{ product.descriptions.first.title }}</p>
                     <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View</a>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="#" class="btn btn-success">Add to Cart</a>
                 </div>
             </div>
         {% endfor %}
