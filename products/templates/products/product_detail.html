@@ -4,8 +4,8 @@
     <div class="container">
         <p>{{ product.name }}</p>
 
-        <table>
-
-        </table>
+        {% for category in category_chain %}
+            <span><a href="#">{{ category.name }}</a> {% if not forloop.last %}>{% endif %}</span>
+        {% endfor %}
     </div>
 {% endblock %}

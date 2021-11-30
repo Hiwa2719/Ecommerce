@@ -18,7 +18,7 @@ class CategoryForm(forms.ModelForm):
 
 
 class ProductForm(forms.ModelForm):
-    excel = forms.FileField()
+    features_excel = forms.FileField(required=False)
 
     class Meta:
         model = Product
@@ -26,8 +26,8 @@ class ProductForm(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        if self.cleaned_data['excel']:
-            csv = self.cleaned_data.get('excel')
+        if self.cleaned_data['features_excel']:
+            csv = self.cleaned_data.get('features_excel')
             file_content = csv.readlines()
             line_lists = []
             for line in file_content:

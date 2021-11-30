@@ -22,12 +22,12 @@ class ProductModelAdmin(AddFieldSetsMixin, admin.ModelAdmin):
             'fields': ('name', 'slug', 'is_active', 'is_digital')
         }),
         (_('Relations'), {
-            'fields': ('brand', 'categories', 'descriptions', 'features', 'images', 'tags')
+            'fields': ('brand', 'categories', 'descriptions', 'features', 'images', 'tags', 'features_excel')
         })
     ]
     add_fieldsets = [
         (None, {
-            'fields': ('name', 'is_active', 'is_digital', 'descriptions', 'excel')
+            'fields': ('name', 'is_active', 'is_digital', 'descriptions', 'features_excel')
         })
     ]
     form = ProductForm
